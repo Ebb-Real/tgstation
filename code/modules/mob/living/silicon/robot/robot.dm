@@ -671,10 +671,14 @@
 			death()
 			toggle_headlamp(1)
 			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed())
 			set_stat(UNCONSCIOUS)
 		else
 			set_stat(CONSCIOUS)
+		if(IsKnockdown())
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun, TRUE, multiplicative_slowdown = 1)
+		else
+			remove_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
